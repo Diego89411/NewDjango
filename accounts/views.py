@@ -33,3 +33,18 @@ def registrarse(request):
 
 
     return render(request, 'registro.html', context)
+
+    #************************CONTROL DE INGRESO DE USUARIOS*********************
+    def login(request):
+        if request.method == 'POST':
+            email = request.POST['email']
+            password = request.POST['password']
+            user = auth.authentication(email= email, password = password)
+
+            if user is not None:
+                auth.login(request, user)
+                return render(request, 'home.html')
+            else:
+                return render(request, 'usuarios/login.html') 
+        else:
+            return render((request), 'usuarios/login.html')        
